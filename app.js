@@ -18,6 +18,7 @@ mongodb://<dbuser>:<dbpassword>@ds053668.mlab.com:53668/heroku_ggj87f0t
 var db = mongoose.connection;
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var environment = require('./routes/environment')
 
 //Init App
 var app = express();
@@ -79,6 +80,7 @@ app.use(function(req,res,next){
 
 app.use('/', routes);
 app.use('/users',users);
+app.use('/environment',environment);
 
 
 //set Port
