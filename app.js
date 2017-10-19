@@ -10,11 +10,8 @@ var passport = require('passport');
 var localStrategy = require('passport-local').strategy;
 var mogno = require('mongo');
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/loginapp');
-mongoose.connect('mongodb://adminuser1:1234567890@ds053668.mlab.com:53668/heroku_ggj87f0t');
-
-
-mongodb://<dbuser>:<dbpassword>@ds053668.mlab.com:53668/heroku_ggj87f0t
+var dbUri = process.env.MONGODB_URI || 'mongodb://localhost/loginapp'
+mongoose.connect(dbUri);
 var db = mongoose.connection;
 var routes = require('./routes/index');
 var users = require('./routes/users');
