@@ -9,7 +9,7 @@ var prodAppConfig = require('../config/prodConfig');
 
 var clientID = process.env.FACEBOOK_CLIENT_ID || facebookAppConfig.facebookAuth.clientID;
 var clientSecret = process.env.FACEBOOK_CLIENT_SECRET || facebookAppConfig.facebookAuth.clientSecretID;
-var callbackURL = (process.env.NODE_ENV ==='production') ? prodAppConfig.callbackURL: facebookAppConfig.facebookAuth.callbackURL;
+var callbackURL = (process.env.NODE_ENV ==='production') ? prodAppConfig.FACEBOOK.callbackURL: facebookAppConfig.facebookAuth.callbackURL;
 
 
 passport.use(new FacebookStrategy({
