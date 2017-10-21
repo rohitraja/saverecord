@@ -15,7 +15,8 @@ mongoose.connect(dbUri);
 var db = mongoose.connection;
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var environment = require('./routes/environment')
+var facebookAuth = require('./routes/facebookAuth');
+var environment = require('./routes/environment');
 
 //Init App
 var app = express();
@@ -78,6 +79,7 @@ app.use(function(req,res,next){
 app.use('/', routes);
 app.use('/users',users);
 app.use('/environment',environment);
+app.use('/facebook',facebookAuth);
 
 
 //set Port

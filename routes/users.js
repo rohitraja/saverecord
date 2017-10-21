@@ -39,7 +39,7 @@ router.post('/register',function(req,res){
 			errors: errors
 		});
 	}else{
-		var newUser = new User({
+		var newUser = new User({		
 			name: regUser.name,
 			email: regUser.email,
 			username: regUser.userName,
@@ -83,7 +83,7 @@ passport.use(new LocalStrategy(
 
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {

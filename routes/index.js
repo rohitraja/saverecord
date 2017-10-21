@@ -10,7 +10,6 @@ router.get('/',ensureAuthenticated,function(req,res){
 
 
 function ensureAuthenticated(req,res,next){
-	console.log("isAuthenticated: " + req.isAuthenticated);
 	if(req.isAuthenticated()){
 		return next();
 	}else{
