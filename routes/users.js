@@ -24,7 +24,6 @@ router.post('/register',function(req,res){
 	regUser.email = req.body.email;
 	regUser.pwd = req.body.password;
 	regUser.pwd2 = req.body.password2;
-	console.log("Register User: "+ JSON.stringify(regUser));
 	//Validation
 	req.checkBody('name','Name is requier').notEmpty();
 	req.checkBody('username','User Name is required').notEmpty();
@@ -48,7 +47,6 @@ router.post('/register',function(req,res){
 
 		User.createUser(newUser, function(err,user){
 			if(err) throw err;
-			console.log(user);
 		});
 		req.flash('success_msg','Your are registered and can login');
 		res.redirect('/users/login');
@@ -59,7 +57,6 @@ router.post('/register',function(req,res){
 passport.use(new LocalStrategy(
   function(username, password, done) {
   	User.getUserByUserName	(username,function(err,user){
-  		console.log("User Name: "+ username);
   		if(err){
   			console.log("Error occured: "+ JSON.stringify(err));
   			throw err;
@@ -68,7 +65,6 @@ passport.use(new LocalStrategy(
   			return done(null, false, {message: 'Unknown User'});
   		}
   		User.comparePassword(password,user.password,function(err,isMatch){
-  			console.log('Original password:' + user.password);
   			if(err) throw err;
   			if(isMatch){
   				return done(null,user);
@@ -83,13 +79,13 @@ passport.use(new LocalStrategy(
 
 
 passport.serializeUser(function(user, done) {
-  done(null, user._id);
+	console.log("serializeUser---> "+ JSON.stringify(user._id));
+  	done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
 	console.log("deserializeUser---> "+ JSON.stringify(id));
   	User.getUserById(id, function(err, user) {
-  	console.log("User: "+ JSON.stringify(user));
     done(err, user);
   });
 });

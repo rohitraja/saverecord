@@ -10,6 +10,7 @@ var passport = require('passport');
 var localStrategy = require('passport-local').strategy;
 var mogno = require('mongo');
 var mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
 var dbUri = process.env.MONGODB_URI || 'mongodb://localhost/loginapp'
 mongoose.connect(dbUri);
 var db = mongoose.connection;
@@ -17,6 +18,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var facebookAuth = require('./routes/facebookAuth');
 var environment = require('./routes/environment');
+var testroutes = require('./routes/testroutes');
 
 //Init App
 var app = express();
@@ -37,7 +39,9 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(session({
 	secret: 'secret',
 	saveUninitialized: true,
-	resave: true
+	resave: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+
 }));
 
 app.use(passport.initialize());
@@ -80,6 +84,7 @@ app.use('/', routes);
 app.use('/users',users);
 app.use('/environment',environment);
 app.use('/facebook',facebookAuth);
+app.use('/test',testroutes);
 
 
 //set Port
